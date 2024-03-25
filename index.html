@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rock Paper Scissors</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  button {
+  
+    font-size: 16px;
+    cursor: pointer;
+    background-color: rgb(255, 199, 13);
+    color: white;
+    width: 90px;
+    height: 40px;
+    box-shadow: 5px 1px 1px 1px #888888;
+  }
+  .one{
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .photo {
+        width: 300px;
+    }
+
+    @media screen and (max-width:480px) {
+        .photo {
+            width: 180px;
+        }
+
+        .body {
+            background-image: none
+        }
+    }
+</style>
+</head>
+<body>
+  <audio id="buzz-audio">
+    <source src="./ayogi-309.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+<h2 style="color:blueviolet;">Rock Paper Scissors</h2>
+<div class="one">
+<button onclick="play('rock')">Rock</button>
+<button onclick="play('paper')">Paper</button>
+<button onclick="play('scissors')">Scissors</button>
+</div>
+<h1 id="result"></h1>
+<center><img src="" class="photo"></center>
+<center>
+  <h3 class="again"></h3>
+</center>
+<script>
+  var rest=document.getElementsByTagName("h1")
+  rest[0].innerHTML="";
+  var ime = document.getElementsByTagName("img");
+  var again=document.getElementsByTagName("h3")
+  again[0].addEventListener("click", () => {
+            window.location.assign("./index.html")
+        })
+function computerPlay() {
+    const choices = ['rock', 'paper', 'scissors'];
+    const randomIndex = Math.floor(Math.random() * choices.length);
+    return choices[randomIndex];
+}
+
+function play(playerSelection) {
+    const computerSelection = computerPlay();
+    
+    let result;
+
+    if (playerSelection === computerSelection) {
+        rest[0].innerHTML= "It's a tie!";
+        rest[0].setAttribute("style","color:black")
+        ime[0].setAttribute("src", "./tie.gif");
+        again[0].innerHTML = "Play Again"
+        again[0].setAttribute("style", "  box-shadow: 5px 1px 1px 1px #888888; cursor: pointer;color: blue; font-family: 'Times New Roman', Times, serif; font-size: large;background-color:bisque;  width:100px;  height:30px; line-height: 1.6;"); 
+    } else if (
+        (playerSelection === 'rock' && computerSelection === 'scissors') ||
+        (playerSelection === 'paper' && computerSelection === 'rock') ||
+        (playerSelection === 'scissors' && computerSelection === 'paper')
+    ) {
+        
+        rest[0].innerHTML="You win! "+playerSelection+ " beats "+computerSelection;
+        rest[0].setAttribute("style","color:green")
+        playBuzzSound();
+        ime[0].setAttribute("src", "./dance.webp")
+        again[0].innerHTML = "Play Again"
+        again[0].setAttribute("style", "  box-shadow: 5px 1px 1px 1px #888888;cursor: pointer;color: blue; font-family: 'Times New Roman', Times, serif; font-size: large;background-color:bisque;  width:100px;  height:30px; line-height: 1.6;") 
+
+    } else {
+        
+        rest[0].innerHTML= "You lose! "+computerSelection +" beats "+playerSelection;
+        rest[0].setAttribute("style","color:red")
+        ime[0].setAttribute("src", "./sad.gif");
+        again[0].innerHTML = "Play Again"
+        again[0].setAttribute("style", " box-shadow: 5px 1px 1px 1px #888888; cursor: pointer;color: blue; font-family: 'Times New Roman', Times, serif; font-size: large;background-color:bisque;  width:100px;  height:30px; line-height: 1.6;");
+    }
+
+    // document.getElementById('result').innerText = result;
+}
+function playBuzzSound() {
+            var audio = document.getElementById("buzz-audio");
+            audio.play();
+        }
+</script>
+
+</body>
+</html>
